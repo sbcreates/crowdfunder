@@ -36,13 +36,29 @@ class RewardTest < ActiveSupport::TestCase
     assert reward.new_record?, 'Reward should not save without a description'
   end
 
+  test "reward dollar_amount must be positive number" do
+    project = new_project
+    project.save
+
+    reward = Reward.create(
+      dollar_amount: 0,
+      project: project,
+      description: "asdfasdfsd"
+    )
+
+    assert reward.invalid?, 'Reward dollar amount must be a positive number'
+
+  end
+
+
   def new_project
     Project.new(
       title:       'Cool new boardgame',
       description: 'Trade sheep',
       start_date:  Date.today,
       end_date:    Date.today + 1.month,
-      goal:        50000
+      goal:        50000,
+      user_id:     1
     )
   end
 
