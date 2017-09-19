@@ -24,15 +24,13 @@ class UserTest < ActiveSupport::TestCase
     refute user.valid?
   end
 
-  # test "user should see all projects they have backed" do
-  #   pledge = build(:pledge)
-  #   pledge.save
-  #   user = User.find_by(id: pledge.user_id)
-  #   outcome = user.projects
-  #   expect = Project.find_by(id: pledge.project_id)
-  #
-  #
-  #   assert_equal(outcome, expect)
-  # end
+  test "user should see all projects they have backed" do
+    pledge = build(:pledge)
+    pledge.save
+    user = User.find_by(id: pledge.user_id)
+    project = Project.find_by(id: pledge.project_id)
+
+    assert_equal(user.projects.first, project)
+  end
 
 end
