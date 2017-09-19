@@ -13,13 +13,12 @@ class PledgeTest < ActiveSupport::TestCase
   end
 
   test 'owner cannot back own project' do
+
     owner = create(:user)
-    project = build(:project)
-    project.user = owner
-    project.save
-    pledge = build(:pledge)
-    pledge.user = owner
-    pledge.save
+    project = build(:project, user: owner)
+
+    pledge = build(:pledge, user: owner, project: project)
+
     assert pledge.invalid?, 'Owner should not be able to pledge towards own project'
   end
 
