@@ -8,8 +8,10 @@ class Pledge < ApplicationRecord
   validates :dollar_amount, :numericality => { :greater_than => 0 }
 
   def owner_cannot_back
-    if self.user == project.user
-      errors.add(:owner, "cannot back own project")
+    if self.user && project.user
+      if self.user == project.user
+        errors.add(:owner, "cannot back own project")
+      end
     end
   end
 
