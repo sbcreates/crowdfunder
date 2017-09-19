@@ -21,4 +21,10 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(email: "bettymaker@gmail.com", password: "1234", password_confirmation: "1234")
     refute user.valid?
   end
+
+  test "user should see all projects they have backed"
+    user = build(:user)
+    project = build(:project, user: user)
+
+    assert_equal(user.project, project)
 end
