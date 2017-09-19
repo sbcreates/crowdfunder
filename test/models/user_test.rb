@@ -33,4 +33,13 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(user.projects.first, project)
   end
 
+  test "user should see total amount they have pledged" do
+    pledge = build(:pledge)
+    pledge.save
+    user = User.find_by(id: pledge.user_id)
+    project = Project.find_by(id: pledge.project_id)
+
+    assert_equal(user.pledges.first.dollar_amount, pledge.dollar_amount)
+  end
+
 end
