@@ -5,6 +5,7 @@ class Pledge < ApplicationRecord
   validates :dollar_amount, presence: true
   validates :user, presence: true
   validate :owner_cannot_back
+  validates :dollar_amount, :numericality => { :greater_than => 0 }
 
   def owner_cannot_back
     if self.user == project.user

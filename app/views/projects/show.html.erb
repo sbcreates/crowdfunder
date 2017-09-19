@@ -11,20 +11,6 @@
 
 <%= form_for [@project, Pledge.new] do |f| %>
 
-  <% if @pledge.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@pledge.errors.count, "error") %> prohibited
-        this pledge from being saved:
-      </h2>
-      <ul>
-        <% @pledge.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <%= f.number_field :dollar_amount, value: @project.rewards.minimum(:dollar_amount), step: 0.01 %>
   <%= f.submit "Pledge" %>
 <% end %>
