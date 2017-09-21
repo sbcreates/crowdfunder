@@ -72,10 +72,22 @@ class UserTest < ActiveSupport::TestCase
 
   test "user should see project owner when visiting project page" do
     project = create(:project)
-
     assert(project.user)
   end
 
+  test "user should see projects started and backed when visiting owner page" do
+
+    proj_1_owner_who_backs = create(:user, email: "2324234@b.c")
+    someoneelse = create(:user, email: "a@b.c")
+
+    project = create(:project, user: proj_1_owner_who_backs)
+    project2 = create(:project, user: someoneelse)
+
+    pledge = create(:pledge, user: proj_1_owner_who_backs, project: project2)
+
+    assert(proj_1_owner_who_backs.projects.all)
+    assert_equal( proj_1_owner_who_backs.pledges.first, pledge )
+  end
 
 
 end
