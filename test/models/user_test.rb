@@ -89,5 +89,8 @@ class UserTest < ActiveSupport::TestCase
     assert_equal( proj_1_owner_who_backs.pledges.first, pledge )
   end
 
+  
+
+
 
 end

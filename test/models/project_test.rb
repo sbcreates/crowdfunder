@@ -79,4 +79,19 @@ class ProjectTest < ActiveSupport::TestCase
     )
   end
 
+  test "User can see total pledge amount for project" do
+
+    project = create(:project)
+    pledge = create(:pledge, user: create(:user), project: project, dollar_amount: 20)
+    pledge = create(:pledge, user: create(:user), project: project, dollar_amount: 11)
+    pledge = create(:pledge, user: create(:user), project: project, dollar_amount: 12)
+    pledge = create(:pledge, user: create(:user), project: project, dollar_amount: 13)
+    pledge = create(:pledge, user: create(:user), project: project, dollar_amount: 20)
+
+    sum = 20 + 11 + 12 + 13 + 20
+
+    assert_equal sum, project.pledges.pluck(:dollar_amount).sum
+  end
+
+
 end
