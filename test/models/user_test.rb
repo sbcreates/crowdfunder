@@ -25,6 +25,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "user should see all projects they have backed" do
+    binding.pry
     pledge = build(:pledge)
     pledge.save
     user = User.find_by(id: pledge.user_id)
@@ -41,5 +42,14 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal(user.pledges.first.dollar_amount, pledge.dollar_amount)
   end
+
+  # test "user should see all projects they own" do
+  #   pledge = build(:pledge)
+  #   pledge.save
+  #   project = Project.find_by(id: pledge.project_id)
+  #   owner = User.find_by(id: project.user_id)
+  #
+  #   assert_equal(owner.projects.first, project)
+  # end
 
 end
