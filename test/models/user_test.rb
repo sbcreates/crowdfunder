@@ -25,31 +25,58 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "user should see all projects they have backed" do
-    binding.pry
-    pledge = build(:pledge)
-    pledge.save
-    user = User.find_by(id: pledge.user_id)
-    project = Project.find_by(id: pledge.project_id)
 
-    assert_equal(user.projects.first, project)
+    owner = create(:user, email: "andy@gmail.com")
+
+    project1 = create(:project, user: owner)
+    project2 = create(:project, user: owner)
+
+    pledger = create(:user)
+
+    pledge = create(:pledge, user: pledger, project: project1)
+    pledge2 = create(:pledge, user: pledger, project: project2)
+
+    array_of_projects = pledger.pledges.all.to_a.map { |each_pledge| each_pledge.project}
+
+    assert_equal(array_of_projects, [project1, project2])
   end
 
   test "user should see total amount they have pledged" do
-    pledge = build(:pledge)
-    pledge.save
-    user = User.find_by(id: pledge.user_id)
-    project = Project.find_by(id: pledge.project_id)
 
-    assert_equal(user.pledges.first.dollar_amount, pledge.dollar_amount)
+    owner = create(:user, email: "andy@gmail.com")
+
+    project1 = create(:project, user: owner)
+    project2 = create(:project, user: owner)
+
+    pledger = create(:user)
+
+    pledge = create(:pledge, user: pledger, project: project1)
+    pledge2 = create(:pledge, user: pledger, project: project2)
+
+    pledge_sum = pledger.pledges.pluck(:dollar_amount).sum
+
+    assert_equal(pledge_sum, (pledge.dollar_amount + pledge2.dollar_amount))
   end
 
-  # test "user should see all projects they own" do
-  #   pledge = build(:pledge)
-  #   pledge.save
-  #   project = Project.find_by(id: pledge.project_id)
-  #   owner = User.find_by(id: project.user_id)
-  #
-  #   assert_equal(owner.projects.first, project)
-  # end
+  test "user should see all projects they own" do
+
+    owner = create(:user, email: "andy@gmail.com")
+
+    project1 = create(:project, user: owner)
+    project2 = create(:project, user: owner)
+
+    array_of_projects = owner.projects.all.to_a
+
+    assert_equal(array_of_projects,  [project1, project2] )
+  end
+
+  test "user should see project owner when visiting project page" do
+    project = create(:project)
+    # owner = User.find_by(id: project.user_id)
+
+    assert(project.user)
+  end
+
+
 
 end
