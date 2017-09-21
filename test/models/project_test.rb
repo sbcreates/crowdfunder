@@ -93,5 +93,25 @@ class ProjectTest < ActiveSupport::TestCase
     assert_equal sum, project.pledges.pluck(:dollar_amount).sum
   end
 
+  test "see if user has already backed project" do
+    backer1 = create(:user)
+    backer2 = create(:user)
+    project = create(:project)
+    pledge = create(:pledge, user: backer2, project: project)
+
+
+    refute project.pledges.pluck(:user_id).include?(backer1.id)
+    assert project.pledges.pluck(:user_id).include?(backer2.id)
+
+  end
+
+  test "user can see total time left until funding deadline" do
+    project = create(:project, start_date: DateTime.now, end_date: (DateTime.now + 4.weeks))
+
+    outcome_time_left_in_project = (project.end_date.to_i - project.start_date.to_i)
+    expected_time_left_in_project = (DateTime.now + 4.weeks).to_i - DateTime.now.to_i
+
+    assert_equal(expected_time_left_in_project, outcome_time_left_in_project)
+  end
 
 end
