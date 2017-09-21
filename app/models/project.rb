@@ -1,4 +1,9 @@
+
+
 class Project < ActiveRecord::Base
+
+  include ActionView::Helpers::DateHelper
+
   has_many :rewards
   has_many :pledges
   has_many :users, through: :pledges # backers
@@ -8,6 +13,10 @@ class Project < ActiveRecord::Base
   validate :start_date_canot_be_in_past
   validate :end_date_must_follow_start_date
   validates :goal, :numericality => { :greater_than => 0 }
+
+  def time_remaining_human
+    distance_of_time_in_words(Time.now, end_date)
+  end
 
   def start_date_canot_be_in_past
 

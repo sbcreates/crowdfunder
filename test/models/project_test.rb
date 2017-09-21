@@ -100,18 +100,22 @@ class ProjectTest < ActiveSupport::TestCase
     pledge = create(:pledge, user: backer2, project: project)
 
 
-    refute project.pledges.pluck(:user_id).include?(backer1.id)
-    assert project.pledges.pluck(:user_id).include?(backer2.id)
+    refute project.pledges.map(&:user).include?(backer1)
+    assert project.pledges.map(&:user).include?(backer2)
 
   end
 
   test "user can see total time left until funding deadline" do
-    project = create(:project, start_date: DateTime.now, end_date: (DateTime.now + 4.weeks))
 
-    outcome_time_left_in_project = (project.end_date.to_i - project.start_date.to_i)
-    expected_time_left_in_project = (DateTime.now + 4.weeks).to_i - DateTime.now.to_i
+    start_time = DateTime.now.beginning_of_day
+    project = create(:project, start_date: start_time , end_date: (start_time + 4.days + 20.hours))
 
-    assert_equal(expected_time_left_in_project, outcome_time_left_in_project)
+    # outcome_time_left_in_project =
+    # expected_time_left_in_project = (start_time + 4.weeks).to_i - DateTime.now.to_i
+
+    assert_equal("4 days", project.time_remaining_human)
   end
+
+
 
 end

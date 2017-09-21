@@ -36,7 +36,7 @@ class UserTest < ActiveSupport::TestCase
     pledge = create(:pledge, user: pledger, project: project1)
     pledge2 = create(:pledge, user: pledger, project: project2)
 
-    array_of_projects = pledger.pledges.all.to_a.map { |each_pledge| each_pledge.project}
+    array_of_projects = pledger.pledges.map { |each_pledge| each_pledge.project}
 
     assert_equal(array_of_projects, [project1, project2])
   end
@@ -89,7 +89,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal( proj_1_owner_who_backs.pledges.first, pledge )
   end
 
-  
+
 
 
 
