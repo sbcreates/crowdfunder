@@ -40,12 +40,20 @@ GEM
       tzinfo (~> 1.1)
     ansi (1.5.0)
     arel (8.0.0)
+    awesome_print (1.8.0)
+    awesome_rails_console (0.4.0)
+      awesome_print
+      pry-rails
+      railties
     bcrypt (3.1.11)
     bindex (0.5.0)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (9.0.6)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
+    debug_inspector (0.0.3)
     docile (1.1.5)
     erubi (1.6.0)
     execjs (2.7.0)
@@ -77,6 +85,10 @@ GEM
     guard-minitest (2.4.6)
       guard-compat (~> 1.2)
       minitest (>= 3.0)
+    hirb (0.7.3)
+    hirb-unicode (0.0.5)
+      hirb (~> 0.5)
+      unicode-display_width (~> 0.1.1)
     i18n (0.8.4)
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
@@ -131,6 +143,14 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.3)
+      byebug (>= 9.0, < 9.1)
+      pry (~> 0.10)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
+    pry-stack_explorer (0.4.9.2)
+      binding_of_caller (>= 0.7)
+      pry (>= 0.9.11)
     puma (3.9.1)
     rack (2.0.3)
     rack-test (0.6.3)
@@ -204,6 +224,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    unicode-display_width (0.1.1)
     web-console (3.5.1)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -217,6 +238,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_rails_console
   bcrypt (~> 3.1.7)
   byebug
   factory_girl_rails
@@ -224,12 +246,16 @@ DEPENDENCIES
   font-awesome-sass (~> 4.7.0)
   guard (~> 2.14.0)
   guard-minitest
+  hirb
+  hirb-unicode
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)
   minitest-rails
   minitest-reporters
   pg
+  pry-byebug
+  pry-stack_explorer
   puma (~> 3.0)
   rails (~> 5.1.1)
   rails-controller-testing
