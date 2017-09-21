@@ -72,7 +72,6 @@ class UserTest < ActiveSupport::TestCase
 
   test "user should see project owner when visiting project page" do
     project = create(:project)
-    # owner = User.find_by(id: project.user_id)
 
     assert(project.user)
   end
